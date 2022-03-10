@@ -7,8 +7,9 @@ namespace PortalOgloszeniowy.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+            : base(options){}
+
+        public DbSet<Advert> Adverts { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

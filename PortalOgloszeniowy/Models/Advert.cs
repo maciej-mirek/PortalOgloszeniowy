@@ -8,7 +8,7 @@ namespace PortalOgloszeniowy.Models
 
         public string Title { get; set; }
 
-        public string Content { get; set; }
+        public string Description { get; set; }
 
         public string Location { get; set; }
 
@@ -19,5 +19,7 @@ namespace PortalOgloszeniowy.Models
         public DateTime Created_at { get; set; }
 
         public ApplicationUser User{ get; set; }
+
+        public Category Category { get; set; }
     }
 }
