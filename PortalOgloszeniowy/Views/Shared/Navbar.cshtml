@@ -6,11 +6,22 @@
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
 </button>
-    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-        <ul class="navbar-nav flex-grow-1">
 
+
+    @*<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">*@
+    <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <button type="button" class="btn btn-outline-secondary">   
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Advert" asp-action="Create">Dodaj Ogłoszenie</a>
+                </button>
+            </li>
 @if(signInManager.IsSignedIn(User))
 {
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">Profil</a>
+    </li>
      <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Wyloguj</a>
     </li>

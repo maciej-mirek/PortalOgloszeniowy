@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PortalOgloszeniowy.Models;
+using PortalOgloszeniowy.Services;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/login";
+});
+
+builder.Services.AddFlashMessage();
+builder.Services.AddScoped<IAdvertService,AdvertService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

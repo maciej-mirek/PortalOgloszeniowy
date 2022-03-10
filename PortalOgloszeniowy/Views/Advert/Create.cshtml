@@ -1,0 +1,54 @@
+﻿@model PortalOgloszeniowy.Models.ViewModels.AdvertViewModel
+
+
+<h1>Dodaj nowe ogłoszenie.</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Advert.Title" class="control-label"></label>
+                <input asp-for="Advert.Title" class="form-control" />
+                <span asp-validation-for="Advert.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advert.Description" class="control-label"></label>
+                <input asp-for="Advert.Description" class="form-control" />
+                <span asp-validation-for="Advert.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advert.Location" class="control-label"></label>
+                <input asp-for="Advert.Location" class="form-control" />
+                <span asp-validation-for="Advert.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advert.Price" class="control-label"></label>
+                <input asp-for="Advert.Price" class="form-control" />
+                <span asp-validation-for="Advert.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3 ">
+               <select asp-for="Advert.CategoryId" asp-items="@Model.CategoryDropDown" class="form-control" >
+                    <option selected>Wybierz kategorie.</option>
+               </select>
+                 <span asp-validation-for="Advert.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3 ">
+                <label class="control-label">Baner ogłoszenia</label>
+                <input type="file" class="form-control"/>
+                
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{ 
+    @{ <partial name="_ValidationScriptsPartial" />}
+}

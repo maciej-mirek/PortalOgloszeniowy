@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PortalOgloszeniowy.Models;
 using PortalOgloszeniowy.Models.ViewModels;
+using PortalOgloszeniowy.Services;
 
 namespace PortalOgloszeniowy.Controllers
 {
@@ -11,11 +13,16 @@ namespace PortalOgloszeniowy.Controllers
 
         UserManager<ApplicationUser> _userManager;
         SignInManager<ApplicationUser> _signInManager;
+        IAdvertService _advertService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+            IAdvertService advertService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _advertService = advertService;
         }
 
         [Route("/login")]
@@ -85,7 +92,16 @@ namespace PortalOgloszeniowy.Controllers
             return View(model);
         }
 
-        
+        [Authorize]
+        [Route("/profile")]
+        public async Task<IActionResult> Profile()
+        {
+            ViewBag.Adverts = _advertService.GetUsersAdverts(await _userManager.GetUserAsync(User));
+
+            return View();
+        }
+
+
         [Route("/logout")]
         public async Task<IActionResult> Logout()
         {

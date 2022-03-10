@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
+
+<h1>Witaj @User.Identity.Name</h1>
+
+@foreach(var a in ViewBag.Adverts)
+{
+   <h3>@a.Title</h3>
+}
