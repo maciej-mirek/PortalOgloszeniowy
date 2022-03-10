@@ -14,7 +14,7 @@ namespace PortalOgloszeniowy.Models
 
         public string Location { get; set; }
 
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
 
         public string? slug { get; set; }
 
@@ -24,8 +24,11 @@ namespace PortalOgloszeniowy.Models
 
         public int CategoryId { get; set; }
 
+
         [ForeignKey("CategoryId")]
         public virtual Category? Category { get; set; }
+
+        public int ViewsCount { get; set; } = 0;
 
     }
 }

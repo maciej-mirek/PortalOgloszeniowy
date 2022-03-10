@@ -10,6 +10,8 @@ namespace PortalOgloszeniowy.Services
 
         public List<Advert> GetAdvertsByCategory(int CategoryId);
 
+        public Advert GetAdvertUrl(string slug);
+
 
     }
 }

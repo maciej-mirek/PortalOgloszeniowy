@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PortalOgloszeniowy.Models;
 using PortalOgloszeniowy.Services;
+using Slugify;
 using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<IAdvertService,AdvertService>();
-
+builder.Services.AddScoped<SlugHelper>();
 
 var app = builder.Build();
 

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PortalOgloszeniowy.Models;
 using PortalOgloszeniowy.Models.ViewModels;
+using PortalOgloszeniowy.Services;
+using Slugify;
 using Vereyon.Web;
 
 namespace PortalOgloszeniowy.Controllers
@@ -14,12 +16,16 @@ namespace PortalOgloszeniowy.Controllers
         UserManager<ApplicationUser> _userManager;
         ApplicationDbContext _db;
         IFlashMessage _flashMessage;
+        IAdvertService _advertService;
+        SlugHelper _slugger;
         public AdvertController(ApplicationDbContext db, UserManager<ApplicationUser> userManager,
-            IFlashMessage flashMessage)
+            IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper)
         {
             _db = db;
             _userManager = userManager;
             _flashMessage = flashMessage;
+            _advertService = advertService;
+            _slugger = slugHelper;
         }
 
 
@@ -48,6 +54,7 @@ namespace PortalOgloszeniowy.Controllers
 
             if (ModelState.IsValid)
             {
+                model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
                 model.Advert.Created_at = DateTime.Now;
                 model.Advert.User = await _userManager.GetUserAsync(User);
                 await _db.Adverts.AddAsync(model.Advert);
@@ -56,16 +63,41 @@ namespace PortalOgloszeniowy.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            model.CategoryDropDown = _db.Categories.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            });
+  
+                return View(model);
             
-            return View(model);
+
+            
+            
         }
-       
 
-
-        [Route("/advert/{id}")]
-        public ActionResult Get(int id)
+        [Route("/{category}")]
+        public ActionResult Category(string category)
         {
-            return Ok(id);
+            var cat = _db.Categories.Where(c => c.Name == category).FirstOrDefault();
+            if (cat == null)
+                return NotFound();
+
+            ViewBag.Adverts = _advertService.GetAdvertsByCategory(cat.Id);
+            return Ok();
         }
+
+        [Route("/advert/{slug}")]
+        public ActionResult SingleAdvert(string slug)
+        {
+            var advert = _advertService.GetAdvertUrl(slug);
+
+            if (advert == null)
+                return NotFound();
+
+            return Ok(advert);
+        }
+
+   
     }
 }
