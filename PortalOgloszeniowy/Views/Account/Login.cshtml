@@ -1,0 +1,70 @@
+﻿@model PortalOgloszeniowy.Models.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    <h3>Jestes zalogowany. </h3>
+     <h4>
+     <p class="">
+        <a asp-action="Logout">Wyloguj się</a>
+     </p>
+     </h4>
+
+    
+
+}
+else
+{
+   <h2>Zaloguj się</h2>
+
+<div class="col-md-8">
+    <section id="loginForm">
+        <form id="account" method="post" asp-action="Login" asp-controller="Account">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <label class="col-md-2" asp-for="Email"></label>
+                <div class="col-md-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2" asp-for="Password"></label>
+                <div class="col-md-10">
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2 checkbox">
+                    <label asp-for="RememberMe" class="pr-4 pl-0">
+                        <input asp-for="RememberMe" />
+                        Nie wylogowuj mnie.
+                    </label>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-md-10 offset-md-2">
+                    <input type="submit" value="Zaloguj się" class="btn btn-success" />
+                </div>
+            </div>
+            <br />
+            <p class="col-md-10 offset-md-2">
+                <a asp-action="Register">Zarejestruj się</a>
+
+            </p>
+        </form>
+    </section>
+</div> 
+}
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}
