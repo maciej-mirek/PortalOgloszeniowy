@@ -100,6 +100,14 @@ namespace PortalOgloszeniowy.Controllers
             return Ok(advert);
         }
 
-   
+        [Route("adverts/{slug}")]
+        public ActionResult SearchAdverts(string slug)
+        {
+            var adverts = _advertService.SearchAdvertsByPhrase(slug);
+
+            return Ok(adverts);
+        }
+
+
     }
 }

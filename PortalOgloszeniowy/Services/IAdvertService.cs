@@ -14,6 +14,7 @@ namespace PortalOgloszeniowy.Services
 
         public void ViewsIncrementation(Advert advert);
 
+        public List<Advert> SearchAdvertsByPhrase(string value);
 
     }
 }

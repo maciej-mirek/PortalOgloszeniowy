@@ -1,5 +1,4 @@
 ﻿using PortalOgloszeniowy.Models;
-
 namespace PortalOgloszeniowy.Services
 {
     public class AdvertService : IAdvertService
@@ -43,6 +42,13 @@ namespace PortalOgloszeniowy.Services
             advert.ViewsCount++; 
             _db.Adverts.Update(advert);
             _db.SaveChanges();
+        }
+
+        public List<Advert> SearchAdvertsByPhrase(string value)
+        {
+            var adverts = _db.Adverts.Where(a => a.Title.Contains(value)).ToList();
+
+            return adverts;
         }
     }
 }

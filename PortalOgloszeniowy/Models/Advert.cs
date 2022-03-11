@@ -30,5 +30,7 @@ namespace PortalOgloszeniowy.Models
 
         public int ViewsCount { get; set; } = 0;
 
+        public bool isPremium { get; set; } = false;
+
     }
 }

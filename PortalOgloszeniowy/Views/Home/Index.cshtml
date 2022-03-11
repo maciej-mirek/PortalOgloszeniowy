@@ -1,10 +1,16 @@
-﻿
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model PortalOgloszeniowy.Models.ViewModels.SearchViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
 <flash dismissable="true" />
+
+<form method="post" >
+<div class="form-group mt-3 ">
+    <label asp-for="SearchPhrase" class="control-label"></label>
+    <input asp-for="SearchPhrase" class="form-control" />
+    <span asp-validation-for="SearchPhrase" class="text-danger"></span>
+
+</div>
+<div class="form-group text-center mt-3">
+<input type="submit" value="Szukaj" class="btn btn-primary" />
+</div>
+</form>
