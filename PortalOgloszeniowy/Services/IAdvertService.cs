@@ -12,6 +12,8 @@ namespace PortalOgloszeniowy.Services
 
         public Advert GetAdvertUrl(string slug);
 
+        public void ViewsIncrementation(Advert advert);
+
 
     }
 }

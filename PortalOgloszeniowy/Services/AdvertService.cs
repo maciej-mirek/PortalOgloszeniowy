@@ -37,5 +37,12 @@ namespace PortalOgloszeniowy.Services
 
             return advert;
         }
+
+        public void ViewsIncrementation(Advert advert)
+        {
+            advert.ViewsCount++; 
+            _db.Adverts.Update(advert);
+            _db.SaveChanges();
+        }
     }
 }

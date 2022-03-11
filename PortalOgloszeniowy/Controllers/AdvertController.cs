@@ -95,6 +95,8 @@ namespace PortalOgloszeniowy.Controllers
             if (advert == null)
                 return NotFound();
 
+            _advertService.ViewsIncrementation(advert);
+
             return Ok(advert);
         }
 

@@ -3,7 +3,7 @@
 
 <h1>Witaj @User.Identity.Name</h1>
 
-@foreach(var a in ViewBag.Adverts)
+@foreach(var adv in ViewBag.Adverts)
 {
-   <h3>@a.Title</h3>
+   <a href="/advert/@adv.slug">@adv.Title</a> <br/>
 }
