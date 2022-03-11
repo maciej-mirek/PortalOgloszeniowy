@@ -32,6 +32,9 @@ namespace PortalOgloszeniowy.Controllers
                 })
             };
 
+            var premium = _advertService.GetPremiumAdverts();
+
+            ViewBag.PremiumAdverts = premium;
 
             return View();
         }
@@ -49,7 +52,9 @@ namespace PortalOgloszeniowy.Controllers
                 
             }
 
+            var premium = _advertService.GetPremiumAdverts();
 
+            ViewBag.PremiumAdverts = premium;
 
 
             SearchViewModel mod = new SearchViewModel()

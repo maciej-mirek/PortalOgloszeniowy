@@ -16,5 +16,7 @@ namespace PortalOgloszeniowy.Services
 
         public List<Advert> SearchAdvertsByPhrase(string value);
 
+        public List<Advert> GetPremiumAdverts();
+
     }
 }

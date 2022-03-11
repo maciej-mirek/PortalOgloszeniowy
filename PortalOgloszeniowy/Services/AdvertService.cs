@@ -50,5 +50,12 @@ namespace PortalOgloszeniowy.Services
 
             return adverts;
         }
+
+        public List<Advert> GetPremiumAdverts()
+        {
+            var adverts = _db.Adverts.Where(a => a.isPremium == true).ToList();
+
+            return adverts;
+        }
     }
 }

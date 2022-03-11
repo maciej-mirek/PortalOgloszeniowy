@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> signInManager
 
-<h1>Witaj @User.Identity.Name</h1>
+<h2>Witaj @User.Identity</h2>
+<h4>Twoje ogłoszenia</h4>
 
 @foreach(var adv in ViewBag.Adverts)
 {

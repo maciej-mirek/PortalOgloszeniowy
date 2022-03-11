@@ -18,14 +18,16 @@ namespace PortalOgloszeniowy.Controllers
         IFlashMessage _flashMessage;
         IAdvertService _advertService;
         SlugHelper _slugger;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public AdvertController(ApplicationDbContext db, UserManager<ApplicationUser> userManager,
-            IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper)
+            IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
             _userManager = userManager;
             _flashMessage = flashMessage;
             _advertService = advertService;
             _slugger = slugHelper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -49,11 +51,25 @@ namespace PortalOgloszeniowy.Controllers
         [Authorize]
         [HttpPost]
         [Route("/create")]
-        public async Task<ActionResult> CreateAsync(AdvertViewModel model)
+        public async Task<ActionResult> CreateAsync(AdvertViewModel model, IFormFile? file)
         {
 
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"images");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                         file.CopyTo(fileStreams);
+                    }
+                    model.Advert.ImageUrl = @"\images" + fileName + extension;
+                }
+
                 model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
                 model.Advert.Created_at = DateTime.Now;
                 model.Advert.User = await _userManager.GetUserAsync(User);
@@ -71,20 +87,23 @@ namespace PortalOgloszeniowy.Controllers
   
                 return View(model);
             
-
-            
             
         }
 
         [Route("/{category}")]
-        public ActionResult Category(string category)
+        public async Task<ActionResult> Category(string category)
         {
             var cat = _db.Categories.Where(c => c.Name == category).FirstOrDefault();
             if (cat == null)
                 return NotFound();
 
-            ViewBag.Adverts = _advertService.GetAdvertsByCategory(cat.Id);
-            return Ok();
+            var adv = _advertService.GetAdvertsByCategory(cat.Id);
+            ViewBag.Adverts = adv;
+
+           // var test = await PaginationList<Advert>.CreateAsync((IQueryable<Advert>)adv,1,5);
+            var test2 = await PaginationList<Advert>.CreateAsync(_db.Adverts,1,5);
+
+            return View(test2);
         }
 
         [Route("/advert/{slug}")]
@@ -105,8 +124,11 @@ namespace PortalOgloszeniowy.Controllers
         {
             var adverts = _advertService.SearchAdvertsByPhrase(slug);
 
-            return Ok(adverts);
+            ViewBag.Adverts = adverts;
+
+            return View(adverts);
         }
+
 
 
     }

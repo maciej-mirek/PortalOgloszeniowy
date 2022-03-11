@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PortalOgloszeniowy.Models
@@ -22,15 +23,21 @@ namespace PortalOgloszeniowy.Models
 
         public ApplicationUser? User{ get; set; }
 
+
+        [ValidateNever]
         public int CategoryId { get; set; }
 
 
+        [ValidateNever]
         [ForeignKey("CategoryId")]
         public virtual Category? Category { get; set; }
 
         public int ViewsCount { get; set; } = 0;
 
         public bool isPremium { get; set; } = false;
+
+        [ValidateNever]
+        public string? ImageUrl { get; set; }
 
     }
 }
