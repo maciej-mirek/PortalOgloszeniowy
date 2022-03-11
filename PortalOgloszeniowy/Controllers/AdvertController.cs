@@ -67,7 +67,7 @@ namespace PortalOgloszeniowy.Controllers
                     {
                          file.CopyTo(fileStreams);
                     }
-                    model.Advert.ImageUrl = @"\images" + fileName + extension;
+                    model.Advert.ImageUrl = @"\images\" + fileName + extension;
                 }
 
                 model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
@@ -116,7 +116,10 @@ namespace PortalOgloszeniowy.Controllers
 
             _advertService.ViewsIncrementation(advert);
 
-            return Ok(advert);
+            ViewBag.Advert = advert;
+            ViewBag.AdvertOwner = _db.Users.Find(advert.UserId);
+
+            return View(advert);
         }
 
         [Route("adverts/{slug}")]

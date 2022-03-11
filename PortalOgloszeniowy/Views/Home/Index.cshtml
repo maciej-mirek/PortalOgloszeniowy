@@ -15,7 +15,7 @@
 </div>
 </form>
 
-<h1 class="display-3 text-center">Najpopularniejsze kategorie</h1>
+<h1 class="display-3 text-center">Kategorie</h1>
 
 <div class="container mt-5 text-center">
     <div class="row">
@@ -38,12 +38,25 @@
 
 
 <div class="container mt-5 text-center">
-    <div class="row">
+
+        <div class="card-group">
 @foreach(var adv in ViewBag.PremiumAdverts)
 {
-    <div class="col square">
-        <a href="/advert/@adv.slug" target="_blank"><h4>@adv.Title</h4></a>
+  
+    <div class="card">
+    <img href="advert/@adv.slug" class="card-img-top" width="351" height="160" src="@adv.ImageUrl" alt="Card image cap">
+      <a style="text-decoration:none; color:black;" target="_blank" href="advert/@adv.slug">
+    <div class="card-body">
+      <h5 class="card-title">@adv.Title</h5>
     </div>
+    <div class="card-footer">
+      <small class="text-muted">@adv.Created_at</small>
+    </div>
+       </a>
+
+  </div>
+ 
+
 }
+        </div>
     <div>
-</div>

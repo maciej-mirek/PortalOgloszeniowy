@@ -97,7 +97,7 @@ namespace PortalOgloszeniowy.Controllers
         public async Task<IActionResult> Profile()
         {
             ViewBag.Adverts = _advertService.GetUsersAdverts(await _userManager.GetUserAsync(User));
-
+            ViewBag.User = await _userManager.GetUserAsync(User);
             return View();
         }
 

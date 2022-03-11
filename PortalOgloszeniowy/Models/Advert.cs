@@ -21,7 +21,10 @@ namespace PortalOgloszeniowy.Models
 
         public DateTime Created_at { get; set; }
 
-        public ApplicationUser? User{ get; set; }
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User{ get; set; }
 
 
         [ValidateNever]
