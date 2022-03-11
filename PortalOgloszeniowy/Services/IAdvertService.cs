@@ -18,5 +18,7 @@ namespace PortalOgloszeniowy.Services
 
         public List<Advert> GetPremiumAdverts();
 
+        public bool DeleteAdvert(int? id);
+
     }
 }

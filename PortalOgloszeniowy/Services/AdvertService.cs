@@ -57,5 +57,18 @@ namespace PortalOgloszeniowy.Services
 
             return adverts;
         }
+
+        public bool DeleteAdvert(int? id)
+        {
+            var adv = _db.Adverts.Find(id);
+            if(adv != null)
+            {
+                _db.Adverts.Remove(adv);
+                _db.SaveChangesAsync();
+                return true;
+            }
+            return false;
+
+        }
     }
 }

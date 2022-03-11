@@ -90,6 +90,20 @@ namespace PortalOgloszeniowy.Controllers
             
         }
 
+        
+        public ActionResult DeleteAdvert(int? id)
+        {
+
+            if (!_advertService.DeleteAdvert(id))
+                return NotFound();
+
+            _flashMessage.Info("Usunięto ogłoszenie.");
+
+            return Ok();
+
+        }
+
+
         [Route("/{category}")]
         public async Task<ActionResult> Category(string category)
         {
@@ -122,6 +136,9 @@ namespace PortalOgloszeniowy.Controllers
             return View(advert);
         }
 
+
+
+
         [Route("adverts/{slug}")]
         public ActionResult SearchAdverts(string slug)
         {
@@ -132,6 +149,9 @@ namespace PortalOgloszeniowy.Controllers
             return View(adverts);
         }
 
+
+
+    
 
 
     }

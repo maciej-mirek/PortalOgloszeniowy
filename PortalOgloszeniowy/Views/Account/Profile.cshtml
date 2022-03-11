@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> signInManager
 
+    
+<flash dismissable="true" />
+
 <h2 class="text-lg-end">Witaj @ViewBag.User.FirstName</h2>
 <h4 class="mt-3">Twoje ogłoszenia</h4>
 
@@ -34,9 +37,33 @@
              }
       </td>
       <td>
-          <button type="button" class="btn btn-info">Edytuj</button>
-          <button type="button" class="btn btn-danger">Usuń</button>
+          
+              <input type="submit" class="btn btn-info" value="Edytuj"/>
 
+
+            <div>
+                <input type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" value="Usuń"/>
+            
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ostrzeżenie</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Czy na pewno chcesz usunąć te ogłoszenie?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                        <button type="button" class="btn btn-danger"  onclick="DeleteAdvert(@adv.Id)" >Usuń</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+         
       </td>
     </tr>
 
