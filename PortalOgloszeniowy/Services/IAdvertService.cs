@@ -20,5 +20,10 @@ namespace PortalOgloszeniowy.Services
 
         public bool DeleteAdvert(int? id);
 
+        public void EditAdvert(Advert advert);
+
+        public bool PremiumAdvert(Advert advert);
+
+
     }
 }

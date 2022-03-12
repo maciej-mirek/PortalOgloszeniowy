@@ -3,6 +3,7 @@
     ViewData["Title"] = @ViewBag.Advert.Title;
 }
 
+
 <div class="container">
     <div class="row">
         <div class="col-8 border">
@@ -18,13 +19,17 @@
         <div class="col-4 border">
             <img class="rounded p-2 mx-auto d-block" width="40%" src="/images/avatar.png"/>
             <p class="text-center"> Autor Ogłoszenia: @ViewBag.AdvertOwner.FirstName </p>
-            <p class="text-center"> Zobacz numer telefonu </p>
-            <h3 class="text-center mt-4">@ViewBag.Advert.Price zł</h3>
+             <p class="number-info text-center">Zobacz numer telefonu</p> <p class="d-none text-center number"> @ViewBag.AdvertOwner.PhoneNumber </p>
+                        <h3 class="text-center mt-4">@ViewBag.Advert.Price zł</h3>
             <div class="mt-5">Lokalizacja: @ViewBag.Advert.Location</div>
             <div class="mt-2">Dodano @ViewBag.Advert.Created_at</div>
+         </div>
+ 
+
 
         </div>
     </div>
+    <div>
     <p class="mt-3 text-end">Wyświetlenia: @ViewBag.Advert.ViewsCount</p>
 </div>
 

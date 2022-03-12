@@ -15,15 +15,17 @@ namespace PortalOgloszeniowy.Models
 
         public string Location { get; set; }
 
-        public decimal? Price { get; set; }
+        public double? Price { get; set; }
 
         public string? slug { get; set; }
 
         public DateTime Created_at { get; set; }
-
+        
+        [ValidateNever]
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
+        [ValidateNever]
         public ApplicationUser User{ get; set; }
 
 

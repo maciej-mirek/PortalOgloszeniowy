@@ -11,13 +11,23 @@
 {
   <a style="text-decoration:none; color:black" href="~/advert/@adv.slug">
     <div class="card w-75">
+
+
+
     <div class="card-body row">
-        <h5 class="h5 card-title col">@adv.Title</h5>
-        <div class="col"><p class="text-end"  ><i class="bi bi-stopwatch fa-lg"></i> @adv.Price zł</p> </div>
-        <small class="text-muted">
+
+         <div class="image-file col" style="">
+            <img src="@adv.ImageUrl" width="250" height="150" class="rounded float-left" alt="Missing File">
+        </div>
+
+        <div class="h5 card-title col">@adv.Title
+          <small class="text-muted mt-5">
           <cite title="Source Title">@adv.Location</cite>
           <cite title="Source Title">@adv.Created_at</cite>
         </small>
+        </div>
+        <div class="col"><p class="text-end"  ><i class="bi bi-stopwatch fa-lg"></i> @adv.Price zł</p> </div>
+
     </div>
    </div>
    </a>

@@ -64,11 +64,32 @@ namespace PortalOgloszeniowy.Services
             if(adv != null)
             {
                 _db.Adverts.Remove(adv);
-                _db.SaveChangesAsync();
+                _db.SaveChanges();
                 return true;
             }
             return false;
 
+        }
+
+        public void EditAdvert(Advert advert)
+        {
+
+            advert.User = _db.Users.Find(advert.UserId);
+            advert.Category = _db.Categories.Find(advert.CategoryId);
+            _db.Adverts.Update(advert);
+            _db.SaveChanges();
+        }
+
+        public bool PremiumAdvert(Advert advert)
+        {
+            if (advert != null)
+            {
+                advert.isPremium = true;
+                _db.Adverts.Update(advert);
+                _db.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -90,19 +90,92 @@ namespace PortalOgloszeniowy.Controllers
             
         }
 
-        
-        public ActionResult DeleteAdvert(int? id)
+        [Authorize]
+        public async Task<ActionResult> DeleteAdvert(int id)
         {
+
+            var user = await _userManager.GetUserAsync(User);
+            
+            var advert = _db.Adverts.Find(id);
+            if(advert.User != user)
+            {
+                return NotFound();
+            }
 
             if (!_advertService.DeleteAdvert(id))
                 return NotFound();
 
             _flashMessage.Info("Usunięto ogłoszenie.");
 
-            return Ok();
+            return RedirectToAction("Profile","Account");
 
         }
 
+        [Authorize]
+        public async Task<ActionResult> PremiumAdvert(int? id)
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var advert = _db.Adverts.Find(id);
+            if (advert.User != user)
+            {
+                return NotFound();
+            }
+
+            if (id == null)
+            {
+                _flashMessage.Warning("Błąd przy płatności.");
+                return RedirectToAction("Profile", "Account");
+            }
+
+            if (!_advertService.PremiumAdvert(advert))
+            {
+                _flashMessage.Warning("Wystąpił problem.");
+                return RedirectToAction("Profile", "Account");
+            }
+
+            _flashMessage.Confirmation("Aktywowano pakiet premium dla ogłoszenia.");
+
+            return RedirectToAction("Profile", "Account");
+
+        }
+
+
+        public ActionResult EditAdvert(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var adv = _db.Adverts.Find(id);
+            if (adv == null)
+            {
+                return NotFound();
+            }
+
+            AdvertViewModel model = new AdvertViewModel()
+            {
+                Advert = adv,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditAdvert(AdvertViewModel model)
+        {
+
+            if(ModelState.IsValid)
+            {
+                _advertService.EditAdvert(model.Advert);
+                _flashMessage.Confirmation("Edytowano ogłoszenie.");
+                return RedirectToAction("Profile", "Account");
+                    
+            }
+            return View(model);
+        }
 
         [Route("/{category}")]
         public async Task<ActionResult> Category(string category)

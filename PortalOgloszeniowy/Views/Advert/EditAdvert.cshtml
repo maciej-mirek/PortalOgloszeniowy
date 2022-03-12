@@ -1,0 +1,54 @@
+﻿@model PortalOgloszeniowy.Models.ViewModels.AdvertViewModel
+
+
+<h1>Edytuj ogłoszenie.</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="EditAdvert">
+                <input asp-for="Advert.Id" hidden/>
+                <input asp-for="Advert.UserId" hidden/>
+                <input asp-for="Advert.CategoryId" hidden/>
+                <input asp-for="Advert.ImageUrl" hidden/>
+                <input asp-for="Advert.slug" hidden/>
+                <input asp-for="Advert.ViewsCount" hidden/>
+                <input asp-for="Advert.Created_at" hidden/>
+                <input asp-for="Advert.isPremium" hidden/>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Advert.Title" class="control-label"></label>
+                <input asp-for="Advert.Title" class="form-control" />
+                <span asp-validation-for="Advert.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advert.Description" class="control-label"></label>
+                <textarea asp-for="Advert.Description" class="form-control"></textarea>
+                <span asp-validation-for="Advert.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advert.Location" class="control-label"></label>
+                <input asp-for="Advert.Location" class="form-control" />
+                <span asp-validation-for="Advert.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advert.Price" class="control-label"></label>
+                <input asp-for="Advert.Price" class="form-control" />
+                <span asp-validation-for="Advert.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Zapisz" class="btn btn-primary m-2" />
+                <a asp-action="Profile" asp-controller="Account" class="btn btn-danger  ">Wróć</a>
+
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{ 
+    @{ <partial name="_ValidationScriptsPartial" />}
+}

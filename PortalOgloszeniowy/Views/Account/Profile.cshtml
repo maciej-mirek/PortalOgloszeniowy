@@ -22,14 +22,35 @@
 {
     <tr>
       <th scope="row">
-          <a href="/advert/@adv.slug">@adv.Title</a> <br/>
+          <a href="/advert/@adv.slug">@adv.Title  @adv.Id</a> <br/>
       </th>
       <td>@adv.Created_at</td>
       <td>@adv.ViewsCount</td>
       <td>
           @if(@adv.isPremium == false)
              {
-                        <button type="button" class="btn btn-success">Ulepsz</button>
+                 <input type="button" data-bs-toggle="modal" data-bs-target="#ModalPremium" class="btn btn-success" value="Ulepsz"/>
+                  <div class="modal fade" id="ModalPremium" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Premium</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Ulepsz swoje ogłoszenie. <br/>
+                        <label>Podaj numer karty kredytowej.</label>
+                        <input type="text"/>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                    <a type="submit" class="btn btn-confirm" asp-route-Id="@adv.Id" disabled asp-controller="Advert" asp-action="PremiumAdvert">Potwierdź</a>
+
+                      </div>
+                 </div>     
+            </div>
+        </div>
+
              }
           else
              {
@@ -38,7 +59,7 @@
       </td>
       <td>
           
-              <input type="submit" class="btn btn-info" value="Edytuj"/>
+              <a type="submit" class="btn btn-info" asp-route-Id="@adv.Id" asp-controller="Advert" asp-action="EditAdvert">Edytuj</a>
 
 
             <div>
@@ -57,7 +78,9 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-                        <button type="button" class="btn btn-danger"  onclick="DeleteAdvert(@adv.Id)" >Usuń</button>
+                        @*<button type="button" class="btn btn-danger"  onclick="DeleteAdvert(@adv.Id)" >Usuń</button>*@
+              <a type="submit" class="btn btn-danger" asp-route-Id="@adv.Id" asp-controller="Advert" asp-action="DeleteAdvert">Usuń</a>
+
                       </div>
                     </div>
                   </div>
@@ -67,7 +90,9 @@
       </td>
     </tr>
 
-   
+      
 }
 </tbody>
 </table>
+
+
