@@ -90,70 +90,6 @@ namespace PortalOgloszeniowy.Controllers
             
         }
 
-        [Route("Advert/DeleteAdvert/{advertId}")]
-        [Authorize]
-        public async Task<ActionResult> DeleteAdvert(int? advertId)
-        {
-
-            var user = await _userManager.GetUserAsync(User);
-            
-            var advert = _db.Adverts.Find(advertId);
-            if(advert.User != user)
-            {
-                return NotFound();
-            }
-
-            if (!_advertService.DeleteAdvert(advertId))
-                return NotFound();
-
-            _flashMessage.Info("Usunięto ogłoszenie.");
-
-            return RedirectToAction("Profile","Account");
-
-        }
-
-
-        [HttpGet]
-        [Route("Account/Advert/ModalAdvert/{id}")]
-        public ActionResult ModalAdvert(int id)
-        {
-            var advert = _db.Adverts.Where(a => a.Id == id).FirstOrDefault();
-            return PartialView("_ModalAdvertPartial",advert);
-        }
-
-
-
-
-        [Authorize]
-        public async Task<ActionResult> PremiumAdvert(int? id)
-        {
-
-            var user = await _userManager.GetUserAsync(User);
-
-            var advert = _db.Adverts.Find(id);
-            if (advert.User != user)
-            {
-                return NotFound();
-            }
-
-            if (id == null)
-            {
-                _flashMessage.Warning("Błąd przy płatności.");
-                return RedirectToAction("Profile", "Account");
-            }
-
-            if (!_advertService.PremiumAdvert(advert))
-            {
-                _flashMessage.Warning("Wystąpił problem.");
-                return RedirectToAction("Profile", "Account");
-            }
-
-            _flashMessage.Confirmation("Aktywowano pakiet premium dla ogłoszenia.");
-
-            return RedirectToAction("Profile", "Account");
-
-        }
-
 
         public ActionResult EditAdvert(int? id)
         {
@@ -180,15 +116,92 @@ namespace PortalOgloszeniowy.Controllers
         public ActionResult EditAdvert(AdvertViewModel model)
         {
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _advertService.EditAdvert(model.Advert);
                 _flashMessage.Confirmation("Edytowano ogłoszenie.");
                 return RedirectToAction("Profile", "Account");
-                    
+
             }
             return View(model);
         }
+
+
+        [HttpGet]
+        [Route("Account/Advert/ModalAdvert/{id}")]
+        public ActionResult ModalAdvert(int id)
+        {
+            var advert = _db.Adverts.Where(a => a.Id == id).FirstOrDefault();
+            return PartialView("_ModalAdvertDeletePartial", advert);
+        }
+
+
+
+        [Route("Advert/DeleteAdvert/{advertId}")]
+        [Authorize]
+        public async Task<ActionResult> DeleteAdvert(int? advertId)
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+            
+            var advert = _db.Adverts.Find(advertId);
+            if(advert.User != user)
+            {
+                return NotFound();
+            }
+
+            if (!_advertService.DeleteAdvert(advertId))
+                return NotFound();
+
+            _flashMessage.Info("Usunięto ogłoszenie.");
+
+            return RedirectToAction("Profile","Account");
+
+        }
+
+
+
+
+        [HttpGet]
+        [Route("Account/Advert/Premium/{id}")]
+        public ActionResult PremiumAdvertModal(int id)
+        {
+            var advert = _db.Adverts.Where(a => a.Id == id).FirstOrDefault();
+            return PartialView("_ModalAdvertPremiumPartial", advert);
+        }
+
+
+        [Route("Advert/PremiumAdvert/{advertId}")]
+        [Authorize]
+        public async Task<ActionResult> PremiumAdvert(int? advertId)
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var advert = _db.Adverts.Find(advertId);
+            if (advert.User != user)
+            {
+                return NotFound();
+            }
+
+            if (advertId == null)
+            {
+                _flashMessage.Warning("Błąd przy płatności.");
+                return RedirectToAction("Profile", "Account");
+            }
+
+            if (!_advertService.PremiumAdvert(advert))
+            {
+                _flashMessage.Warning("Wystąpił problem.");
+                return RedirectToAction("Profile", "Account");
+            }
+
+            _flashMessage.Confirmation("Aktywowano pakiet premium dla ogłoszenia.");
+
+            return RedirectToAction("Profile", "Account");
+
+        }
+
 
         [Route("/{category}")]
         public async Task<ActionResult> Category(string category)

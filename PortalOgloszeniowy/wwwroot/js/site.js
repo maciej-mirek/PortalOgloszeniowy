@@ -57,20 +57,6 @@ $(function () {
     
 PlaceHolderElement.on('click', '[data-save="modal"]', function (e) {
     PlaceHolderElement.find('.modal').modal('hide');
-    //e.preventDefault();
-   /* var form = $(this).parents('.modal').find('form');
-    var actionUrl = form.attr('action');
-    var sendData = form.serialize();
-    $.post(actionUrl, sendData).done(function (data) {
-        PlaceHolderElement.find('.modal').modal('hide');
-    })*/
 })
 
 })
-
-$('.my_modal').on('click', function (e) {
-    var bookId = $(this).data('id');
-    console.log(bookId)
-    $('#advertId').val(bookId);
-
-});

@@ -92,6 +92,14 @@ namespace PortalOgloszeniowy.Controllers
             return View(model);
         }
 
+
+        [Route("/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
+        }
+
         [Authorize]
         [Route("/profile")]
         public async Task<IActionResult> Profile()
@@ -99,14 +107,6 @@ namespace PortalOgloszeniowy.Controllers
             ViewBag.Adverts = _advertService.GetUsersAdverts(await _userManager.GetUserAsync(User));
             ViewBag.User = await _userManager.GetUserAsync(User);
             return View();
-        }
-
-
-        [Route("/logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
         }
     }
 }

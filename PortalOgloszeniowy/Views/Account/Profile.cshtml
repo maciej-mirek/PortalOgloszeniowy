@@ -29,28 +29,10 @@
       <td>
           @if(@adv.isPremium == false)
              {
-                 <input type="button" data-bs-toggle="modal" data-bs-target="#ModalPremium" class="btn btn-success" value="Ulepsz"/>
-                  <div class="modal fade" id="ModalPremium" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Premium</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        Ulepsz swoje ogłoszenie. <br/>
-                        <label>Podaj numer karty kredytowej.</label>
-                        <input type="text"/>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-                    <a type="submit" class="btn btn-confirm" asp-route-Id="@adv.Id"  asp-controller="Advert" asp-action="PremiumAdvert">Potwierdź</a>
-
-                      </div>
-                 </div>     
-            </div>
-        </div>
-
+                
+                    <button type="button" class="btn btn-success" data-toggle="ajax-modal" data-target="#addPremium"
+                        data-url="@Url.Action($"Advert/Premium/{@adv.Id}")">Ulepsz</button>
+                          <div id="PlaceHolderHere"> </div>
              }
           else
              {

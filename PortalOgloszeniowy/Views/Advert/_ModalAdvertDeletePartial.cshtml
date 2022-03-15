@@ -13,9 +13,9 @@
       <div class="modal-footer">
          <form method="post" asp-antiforgery="false" asp-action="DeleteAdvert" asp-controller="Advert"> 
              <input type="hidden" asp-for="@Model.Id" id="advertId" name="advertId" />
-             <a type="submit" class="btn btn-danger" asp-route-Id="@Model.Id" asp-controller="Advert" asp-action="DeleteAdvert">@Model.Id Usuń</a>
+            <button type="button" class="btn btn-info" data-save="modal">Zamknij</button>
+             <a type="submit" class="btn btn-danger" asp-route-Id="@Model.Id" asp-controller="Advert" asp-action="DeleteAdvert">Usuń</a>
          </form>
-          <button type="button" class="btn btn-info" data-save="modal">Close</button>
 
       </div>
     </div>
