@@ -1,0 +1,23 @@
+﻿@model PortalOgloszeniowy.Models.Advert
+
+<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Usuń ogłoszenie</h5>
+      </div>
+      <div class="modal-body">
+        <p>Czy na pewno chcesz usunąć to ogłoszenie?</p>
+        <small>Zmian nie da się cofnąć.</small>
+      </div>
+      <div class="modal-footer">
+         <form method="post" asp-antiforgery="false" asp-action="DeleteAdvert" asp-controller="Advert"> 
+             <input type="hidden" asp-for="@Model.Id" id="advertId" name="advertId" />
+             <a type="submit" class="btn btn-danger" asp-route-Id="@Model.Id" asp-controller="Advert" asp-action="DeleteAdvert">@Model.Id Usuń</a>
+         </form>
+          <button type="button" class="btn btn-info" data-save="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>

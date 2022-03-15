@@ -35,3 +35,42 @@ $(".number-info").click(function () {
     $(".number-info").addClass("d-none");
     $(".number").removeClass("d-none");
 })
+
+function test(id) {
+    console.log(id);
+}
+
+
+
+
+$(function () {
+    var PlaceHolderElement = $('#PlaceHolderHere');
+    $('button[data-toggle="ajax-modal"]').click(function (e) {
+        var url = $(this).data('url');
+        var decodedUrl = decodeURIComponent(url);
+        $.get(decodedUrl).done(function (data) {
+            PlaceHolderElement.html(data);
+            PlaceHolderElement.find('.modal').modal('show');
+        })
+    })
+
+    
+PlaceHolderElement.on('click', '[data-save="modal"]', function (e) {
+    PlaceHolderElement.find('.modal').modal('hide');
+    //e.preventDefault();
+   /* var form = $(this).parents('.modal').find('form');
+    var actionUrl = form.attr('action');
+    var sendData = form.serialize();
+    $.post(actionUrl, sendData).done(function (data) {
+        PlaceHolderElement.find('.modal').modal('hide');
+    })*/
+})
+
+})
+
+$('.my_modal').on('click', function (e) {
+    var bookId = $(this).data('id');
+    console.log(bookId)
+    $('#advertId').val(bookId);
+
+});

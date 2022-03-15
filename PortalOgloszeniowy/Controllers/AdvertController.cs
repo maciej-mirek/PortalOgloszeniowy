@@ -51,7 +51,7 @@ namespace PortalOgloszeniowy.Controllers
         [Authorize]
         [HttpPost]
         [Route("/create")]
-        public async Task<ActionResult> CreateAsync(AdvertViewModel model, IFormFile? file)
+        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file)
         {
 
             if (ModelState.IsValid)
@@ -90,19 +90,20 @@ namespace PortalOgloszeniowy.Controllers
             
         }
 
+        [Route("Advert/DeleteAdvert/{advertId}")]
         [Authorize]
-        public async Task<ActionResult> DeleteAdvert(int id)
+        public async Task<ActionResult> DeleteAdvert(int? advertId)
         {
 
             var user = await _userManager.GetUserAsync(User);
             
-            var advert = _db.Adverts.Find(id);
+            var advert = _db.Adverts.Find(advertId);
             if(advert.User != user)
             {
                 return NotFound();
             }
 
-            if (!_advertService.DeleteAdvert(id))
+            if (!_advertService.DeleteAdvert(advertId))
                 return NotFound();
 
             _flashMessage.Info("Usunięto ogłoszenie.");
@@ -110,6 +111,18 @@ namespace PortalOgloszeniowy.Controllers
             return RedirectToAction("Profile","Account");
 
         }
+
+
+        [HttpGet]
+        [Route("Account/Advert/ModalAdvert/{id}")]
+        public ActionResult ModalAdvert(int id)
+        {
+            var advert = _db.Adverts.Where(a => a.Id == id).FirstOrDefault();
+            return PartialView("_ModalAdvertPartial",advert);
+        }
+
+
+
 
         [Authorize]
         public async Task<ActionResult> PremiumAdvert(int? id)
