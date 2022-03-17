@@ -6,7 +6,9 @@ namespace PortalOgloszeniowy.Models
 {
     public class Advert
     {
-        [Key]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -26,6 +28,7 @@ namespace PortalOgloszeniowy.Models
 
         [ForeignKey("UserId")]
         [ValidateNever]
+
         public ApplicationUser User{ get; set; }
 
 

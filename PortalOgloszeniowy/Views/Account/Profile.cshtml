@@ -32,7 +32,6 @@
                 
                     <button type="button" class="btn btn-success" data-toggle="ajax-modal" data-target="#addPremium"
                         data-url="@Url.Action($"Advert/Premium/{@adv.Id}")">Ulepsz</button>
-                          <div id="PlaceHolderHere"> </div>
              }
           else
              {
@@ -41,6 +40,7 @@
       </td>
       <td>
 
+           <a type="submit" class="btn btn-info" asp-route-Id="@adv.Id" asp-controller="Advert" asp-action="EditAdvert">Edytuj</a>
 
         <button type="button" class="btn-danger btn" data-toggle="ajax-modal" data-target="#addEmployee"
             data-url="@Url.Action($"Advert/ModalAdvert/{@adv.Id}")">Usuń</button>

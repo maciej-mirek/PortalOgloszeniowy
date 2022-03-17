@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PortalOgloszeniowy.Models.ViewModels
@@ -9,6 +10,9 @@ namespace PortalOgloszeniowy.Models.ViewModels
 
         [ValidateNever]
         public IEnumerable<SelectListItem>? CategoryDropDown { get; set; }
+
+        [ValidateNever]
+        public List<AdvertImages> Images { get; set; }
 
     }
 }

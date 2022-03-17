@@ -51,7 +51,7 @@ namespace PortalOgloszeniowy.Controllers
         [Authorize]
         [HttpPost]
         [Route("/create")]
-        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file)
+        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file, IFormFileCollection? files)
         {
 
             if (ModelState.IsValid)
@@ -70,11 +70,37 @@ namespace PortalOgloszeniowy.Controllers
                     model.Advert.ImageUrl = @"\images\" + fileName + extension;
                 }
 
+
                 model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
                 model.Advert.Created_at = DateTime.Now;
                 model.Advert.User = await _userManager.GetUserAsync(User);
-                await _db.Adverts.AddAsync(model.Advert);
-                await _db.SaveChangesAsync();
+
+
+                if (files != null)
+                {
+                    foreach (var f in files)
+                    {
+                        string fileName = Guid.NewGuid().ToString();
+                        var uploads = Path.Combine(wwwRootPath, @"images");
+                        var extension = Path.GetExtension(f.FileName);
+
+                        using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                        {
+                            f.CopyTo(fileStreams);
+                        }
+                        AdvertImages advertImages = new AdvertImages()
+                        {
+                            ImageUrl = @"\images\" + fileName + extension,
+                            Advert = model.Advert,
+                        };
+                         await _db.AdvertImages.AddAsync(advertImages);
+                    }
+                }
+
+
+
+                 await _db.Adverts.AddAsync(model.Advert);
+                 await _db.SaveChangesAsync();
                 _flashMessage.Confirmation("Dodano nowe ogłoszenie.");
                 return RedirectToAction("Index", "Home");
             }

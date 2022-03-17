@@ -3,31 +3,6 @@
 
 // Write your JavaScript code.
 
-/*
-function DeleteAdvert(id) {
-    console.log(id);
-    $.ajax({
-        url: 'advert/DeleteAdvert/'+ id,
-        type: 'GET',
-        success: function () {
-           // window.location.reload();
-
-        }
-    })
-}
-
-function PremiumAdvert(id1) {
-    console.log(id1);
-    $.ajax({
-        url: 'advert/PremiumAdvert/' + id1,
-        type: 'GET',
-        success: function () {
-           // window.location.reload();
-
-        }
-    })
-}
-*/
 
 
 $(".number-info").click(function () {
