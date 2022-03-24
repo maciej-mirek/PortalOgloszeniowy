@@ -25,6 +25,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<IAdvertService,AdvertService>();
+builder.Services.AddScoped<IUploadImageService,UploadImageService>();
 builder.Services.AddScoped<SlugHelper>();
 
 var app = builder.Build();

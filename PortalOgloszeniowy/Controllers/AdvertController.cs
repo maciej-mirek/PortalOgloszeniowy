@@ -18,16 +18,17 @@ namespace PortalOgloszeniowy.Controllers
         IFlashMessage _flashMessage;
         IAdvertService _advertService;
         SlugHelper _slugger;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        IUploadImageService _uploadImageService;
         public AdvertController(ApplicationDbContext db, UserManager<ApplicationUser> userManager,
-            IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper, IWebHostEnvironment webHostEnvironment)
+            IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper, 
+            IUploadImageService uploadImageService)
         {
             _db = db;
             _userManager = userManager;
             _flashMessage = flashMessage;
             _advertService = advertService;
             _slugger = slugHelper;
-            _webHostEnvironment = webHostEnvironment;
+            _uploadImageService = uploadImageService;
         }
 
 
@@ -56,48 +57,16 @@ namespace PortalOgloszeniowy.Controllers
 
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
-                {
-                    string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(wwwRootPath, @"images");
-                    var extension = Path.GetExtension(file.FileName);
+                    model.Advert.ImageUrl = _uploadImageService.AdvertBanner(file);
 
-                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                    {
-                         file.CopyTo(fileStreams);
-                    }
-                    model.Advert.ImageUrl = @"\images\" + fileName + extension;
-                }
+                if (files != null)
+                    _uploadImageService.AdvertImages(files, model.Advert);
 
 
                 model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
                 model.Advert.Created_at = DateTime.Now;
                 model.Advert.User = await _userManager.GetUserAsync(User);
-
-
-                if (files != null)
-                {
-                    foreach (var f in files)
-                    {
-                        string fileName = Guid.NewGuid().ToString();
-                        var uploads = Path.Combine(wwwRootPath, @"images");
-                        var extension = Path.GetExtension(f.FileName);
-
-                        using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                        {
-                            f.CopyTo(fileStreams);
-                        }
-                        AdvertImages advertImages = new AdvertImages()
-                        {
-                            ImageUrl = @"\images\" + fileName + extension,
-                            Advert = model.Advert,
-                        };
-                         await _db.AdvertImages.AddAsync(advertImages);
-                    }
-                }
-
-
 
                  await _db.Adverts.AddAsync(model.Advert);
                  await _db.SaveChangesAsync();
@@ -112,8 +81,7 @@ namespace PortalOgloszeniowy.Controllers
             });
   
                 return View(model);
-            
-            
+
         }
 
 
