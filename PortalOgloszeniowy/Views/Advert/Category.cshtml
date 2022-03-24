@@ -1,13 +1,13 @@
-﻿
+﻿@model PortalOgloszeniowy.Models.PaginationList<Advert>
 
 @{
-    //var prevDisabled = !Model.PreviousPage ? "disabled" : "";
-    //var nextDisabled = !Model.NextPage ? "disabled" : "";
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
 }
 
 
 
-@foreach(var adv in ViewBag.Adverts)
+@foreach(var adv in @Model)
 {
   <a style="text-decoration:none; color:black" href="~/advert/@adv.slug">
     <div class="card w-75">
@@ -32,10 +32,37 @@
    </div>
    </a>
 }
+<nav>
 
-<a asp-action="Category" asp-route-pageNumber="@(@Model.PageIndex - 1)" class="btn btn-default ">
-    Wstecz
+<ul class="pagination">
+    <a asp-action="Category"  asp-route-pageNumber="@(@Model.PageIndex - 1)" class="btn btn-default @prevDisabled ">
+    Wstecz 
 </a>
-<a asp-action="Category" asp-route-pageNumber="@(@Model.PageIndex + 1)" class="btn btn-default ">
-    Następna
+@for (int i = 1; i <= @ViewBag.pageCount;i++)
+{
+    @if (@Model.PageIndex == i)
+            {
+               <li class="page-item active"> 
+                    <a class="page-link">
+                        @i 
+                    </a>
+                </li>
+                
+            }
+            else
+            {
+                <li class="page-item"> 
+         <a asp-action="Category"  asp-route-pageNumber="@i" class="page-link btn btn-default">
+             @i
+        </a>
+    </li>
+            }
+
+            
+}
+<a asp-action="Category"  asp-route-pageNumber="@(@Model.PageIndex + 1)" class="btn btn-default @nextDisabled ">
+    Następna 
 </a>
+</ul>
+
+</nav>

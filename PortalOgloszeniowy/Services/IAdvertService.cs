@@ -8,7 +8,7 @@ namespace PortalOgloszeniowy.Services
 
         public List<Advert> GetUsersAdverts(ApplicationUser user);
 
-        public List<Advert> GetAdvertsByCategory(int CategoryId);
+        public IQueryable<Advert> GetAdvertsByCategory(int CategoryId);
 
         public Advert GetAdvertUrl(string slug);
 

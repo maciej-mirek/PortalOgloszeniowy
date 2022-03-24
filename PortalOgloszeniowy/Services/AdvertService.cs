@@ -23,9 +23,9 @@ namespace PortalOgloszeniowy.Services
             return adverts;
         }
 
-        public List<Advert> GetAdvertsByCategory(int CategoryId)
+        public IQueryable<Advert> GetAdvertsByCategory(int CategoryId)
         {
-            var adverts = _db.Adverts.Where(a => a.CategoryId == CategoryId).ToList();
+            var adverts = _db.Adverts.Where(a => a.CategoryId == CategoryId);
 
             return adverts;
         }

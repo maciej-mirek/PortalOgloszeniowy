@@ -230,19 +230,24 @@ namespace PortalOgloszeniowy.Controllers
 
 
         [Route("/{category}")]
-        public async Task<ActionResult> Category(string category)
+        public async Task<ActionResult> Category(string category, int pageNumber)
         {
             var cat = _db.Categories.Where(c => c.Name == category).FirstOrDefault();
             if (cat == null)
                 return NotFound();
 
             var adv = _advertService.GetAdvertsByCategory(cat.Id);
-            ViewBag.Adverts = adv;
 
-           // var test = await PaginationList<Advert>.CreateAsync((IQueryable<Advert>)adv,1,5);
-            var test2 = await PaginationList<Advert>.CreateAsync(_db.Adverts,1,5);
+           
 
-            return View(test2);
+           pageNumber = pageNumber == 0 ? 1 : pageNumber;
+           var pagination = await PaginationList<Advert>.CreateAsync(adv, pageNumber, 5);
+           int pageCount = adv.Count() / 5;
+           pageCount = adv.Count() % 5 != 0 ? pageCount + 1 : pageCount;
+
+           ViewBag.pageCount = pageCount;
+
+            return View(pagination);
         }
 
         [Route("/advert/{slug}")]
@@ -257,6 +262,7 @@ namespace PortalOgloszeniowy.Controllers
 
             ViewBag.Advert = advert;
             ViewBag.AdvertOwner = _db.Users.Find(advert.UserId);
+            ViewBag.Gallery = _db.AdvertImages.Where(a => a.Advert.Id == advert.Id).ToList();
 
             return View(advert);
         }
