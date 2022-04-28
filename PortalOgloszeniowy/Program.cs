@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PortalOgloszeniowy.Models;
 using PortalOgloszeniowy.Services;
 using Slugify;
+using System.Globalization;
 using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +29,14 @@ builder.Services.AddScoped<IAdvertService,AdvertService>();
 builder.Services.AddScoped<IUploadImageService,UploadImageService>();
 builder.Services.AddScoped<SlugHelper>();
 
+
+CultureInfo culture = new CultureInfo("pl-PL");
+Thread.CurrentThread.CurrentCulture = culture;
+Thread.CurrentThread.CurrentUICulture = culture;
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

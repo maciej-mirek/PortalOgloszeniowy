@@ -14,7 +14,7 @@
          <form method="post" asp-antiforgery="false" asp-action="PremiumAdvert" asp-controller="Advert"> 
              <input type="hidden" asp-for="@Model.Id" id="advertId" name="advertId" />
             <button type="button" class="btn btn-info" data-save="modal">Zamknij</button>
-             <a type="submit" class="btn btn-success" asp-route-Id="@Model.Id" asp-controller="Advert" asp-action="PremiumAdvert">Ulepsz</a>
+             <input type="submit" class="btn btn-success" asp-route-Id="@Model.Id" asp-controller="Advert" asp-action="PremiumAdvert" value="Ulepsz"/>
          </form>
 
       </div>

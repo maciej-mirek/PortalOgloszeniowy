@@ -10,10 +10,9 @@ namespace PortalOgloszeniowy.Controllers
 
     public class AccountController : Controller
     {
-
-        UserManager<ApplicationUser> _userManager;
-        SignInManager<ApplicationUser> _signInManager;
-        IAdvertService _advertService;
+        readonly UserManager<ApplicationUser> _userManager;
+        readonly SignInManager<ApplicationUser> _signInManager;
+        readonly IAdvertService _advertService;
 
 
 

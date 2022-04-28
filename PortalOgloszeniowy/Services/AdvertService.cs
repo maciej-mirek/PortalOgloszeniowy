@@ -30,7 +30,7 @@ namespace PortalOgloszeniowy.Services
             return adverts;
         }
 
-        public Advert GetAdvertUrl(string slug)
+        public Advert? GetAdvertUrl(string slug)
         {
             var advert = _db.Adverts.Where(a => a.slug == slug).FirstOrDefault();
 

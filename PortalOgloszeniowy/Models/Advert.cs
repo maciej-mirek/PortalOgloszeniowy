@@ -11,13 +11,19 @@ namespace PortalOgloszeniowy.Models
         
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Tytuł jest wymagany.")]
         public string Title { get; set; }
 
+        [Required(ErrorMessage = "Opis jest wymagany.")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Lokalizacja jest wymagana.")]
         public string Location { get; set; }
 
-        public double? Price { get; set; }
+        //[RegularExpression(@"^[1-9]\d{0,7}(?:\,\d{1,4})?$",ErrorMessage ="Wprowadz cene w formacie: 12,34")]
+        // [ValidateNever]
+        //[DataType(DataType.Currency,ErrorMessage ="test")]
+        public decimal Price { get; set; }
 
         public string? slug { get; set; }
 
@@ -28,15 +34,14 @@ namespace PortalOgloszeniowy.Models
 
         [ForeignKey("UserId")]
         [ValidateNever]
-
         public ApplicationUser User{ get; set; }
 
 
-        [ValidateNever]
+      
         public int CategoryId { get; set; }
 
 
-        [ValidateNever]
+        
         [ForeignKey("CategoryId")]
         public virtual Category? Category { get; set; }
 

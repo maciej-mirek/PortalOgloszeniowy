@@ -10,7 +10,7 @@ namespace PortalOgloszeniowy.Services
 
         public IQueryable<Advert> GetAdvertsByCategory(int CategoryId);
 
-        public Advert GetAdvertUrl(string slug);
+        public Advert? GetAdvertUrl(string slug);
 
         public void ViewsIncrementation(Advert advert);
 

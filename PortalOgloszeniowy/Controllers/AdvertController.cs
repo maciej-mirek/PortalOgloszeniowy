@@ -52,11 +52,13 @@ namespace PortalOgloszeniowy.Controllers
         [Authorize]
         [HttpPost]
         [Route("/create")]
-        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file, IFormFileCollection? files)
+        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file, IFormFileCollection? files, decimal price)
         {
 
             if (ModelState.IsValid)
             {
+
+                
                 if (file != null)
                     model.Advert.ImageUrl = _uploadImageService.AdvertBanner(file);
 
@@ -67,11 +69,27 @@ namespace PortalOgloszeniowy.Controllers
                 model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
                 model.Advert.Created_at = DateTime.Now;
                 model.Advert.User = await _userManager.GetUserAsync(User);
+                model.Advert.Price = price;
 
                  await _db.Adverts.AddAsync(model.Advert);
                  await _db.SaveChangesAsync();
                 _flashMessage.Confirmation("Dodano nowe ogłoszenie.");
                 return RedirectToAction("Index", "Home");
+            }
+
+            if(ModelState["Advert.CategoryId"]?.Errors.Count > 0)
+            {
+                ModelState["Advert.CategoryId"]?.Errors.Clear();
+                ModelState["Advert.CategoryId"]?.Errors.Add("Musisz wybrać kategorie dla ogłoszenia.");
+                ModelState["Advert.Price"]?.Errors.Add("Wprowadz cene w formacie: 12,34");
+
+
+            }
+            if (ModelState["price"]?.Errors.Count > 0)
+            {
+                ModelState["Advert.Price"]?.Errors.Clear();
+                ModelState["Advert.Price"]?.Errors.Add("Wprowadz cene w formacie: 12,34");
+
             }
 
             model.CategoryDropDown = _db.Categories.Select(c => new SelectListItem
@@ -121,7 +139,7 @@ namespace PortalOgloszeniowy.Controllers
         }
 
 
-        [HttpGet]
+
         [Route("Account/Advert/ModalAdvert/{id}")]
         public ActionResult ModalAdvert(int id)
         {
@@ -130,10 +148,9 @@ namespace PortalOgloszeniowy.Controllers
         }
 
 
-
-        [Route("Advert/DeleteAdvert/{advertId}")]
+        [HttpPost]
         [Authorize]
-        public async Task<ActionResult> DeleteAdvert(int? advertId)
+        public async Task<ActionResult> DeleteAdvert(int advertId)
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -155,7 +172,6 @@ namespace PortalOgloszeniowy.Controllers
 
 
 
-
         [HttpGet]
         [Route("Account/Advert/Premium/{id}")]
         public ActionResult PremiumAdvertModal(int id)
@@ -164,8 +180,7 @@ namespace PortalOgloszeniowy.Controllers
             return PartialView("_ModalAdvertPremiumPartial", advert);
         }
 
-
-        [Route("Advert/PremiumAdvert/{advertId}")]
+        [HttpPost]
         [Authorize]
         public async Task<ActionResult> PremiumAdvert(int? advertId)
         {
@@ -247,11 +262,6 @@ namespace PortalOgloszeniowy.Controllers
 
             return View(adverts);
         }
-
-
-
-    
-
 
     }
 }
