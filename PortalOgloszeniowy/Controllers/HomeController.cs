@@ -45,7 +45,7 @@ namespace PortalOgloszeniowy.Controllers
 
             if(ModelState.IsValid)
             {
-                if(model.SearchPhrase != null)
+                if(model.SearchPhrase is not null)
                 {
                     return Redirect("/adverts/"+model.SearchPhrase);
                 }

@@ -19,6 +19,7 @@ namespace PortalOgloszeniowy.Controllers
         IAdvertService _advertService;
         SlugHelper _slugger;
         IUploadImageService _uploadImageService;
+        const int AdvertsOnPage = 5;
         public AdvertController(ApplicationDbContext db, UserManager<ApplicationUser> userManager,
             IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper, 
             IUploadImageService uploadImageService)
@@ -59,10 +60,10 @@ namespace PortalOgloszeniowy.Controllers
             {
 
                 
-                if (file != null)
+                if (file is not null)
                     model.Advert.ImageUrl = _uploadImageService.AdvertBanner(file);
 
-                if (files != null)
+                if (files is not null)
                     _uploadImageService.AdvertImages(files, model.Advert);
 
 
@@ -108,13 +109,13 @@ namespace PortalOgloszeniowy.Controllers
 
             //dodac walidacje uzytkownika :3 //
 
-            if (id == null || id == 0)
+            if (id is null || id == 0)
             {
                 return NotFound();
             }
 
             var adv = _db.Adverts.Find(id);
-            if (adv == null)
+            if (adv is null)
             {
                 return NotFound();
             }
@@ -143,8 +144,8 @@ namespace PortalOgloszeniowy.Controllers
 
 
 
-        [Route("Account/Advert/ModalAdvert/{id}")]
-        public ActionResult ModalAdvert(int id)
+        [Route("Account/Advert/ModalDeleteAdvert/{id}")]
+        public ActionResult ModalDeleteAdvert(int id)
         {
             var advert = _db.Adverts.Where(a => a.Id == id).FirstOrDefault();
             return PartialView("_ModalAdvertDeletePartial", advert);
@@ -195,7 +196,7 @@ namespace PortalOgloszeniowy.Controllers
                 return NotFound();
             }
 
-            if (advertId == null)
+            if (advertId is null)
             {
                 _flashMessage.Warning("Błąd przy płatności.");
                 return RedirectToAction("Profile", "Account");
@@ -218,16 +219,15 @@ namespace PortalOgloszeniowy.Controllers
         public async Task<ActionResult> Category(string category, int pageNumber)
         {
             var cat = _db.Categories.Where(c => c.Name == category).FirstOrDefault();
-            if (cat == null)
+            if (cat is null)
                 return NotFound();
 
             var adv = _advertService.GetAdvertsByCategory(cat.Id);
-            var test = adv.ToList();
 
            pageNumber = pageNumber == 0 ? 1 : pageNumber;
-           var pagination = await PaginationList<Advert>.CreateAsync(adv, pageNumber, 5);
-           int pageCount = adv.Count() / 5;
-           pageCount = adv.Count() % 5 != 0 ? pageCount + 1 : pageCount;
+           var pagination = await PaginationList<Advert>.CreateAsync(adv, pageNumber, AdvertsOnPage);
+           int pageCount = adv.Count() / AdvertsOnPage;
+           pageCount = adv.Count() % AdvertsOnPage != 0 ? pageCount + 1 : pageCount;
 
            ViewBag.pageCount = pageCount;
 
@@ -239,7 +239,7 @@ namespace PortalOgloszeniowy.Controllers
         {
             var advert = _advertService.GetAdvertUrl(slug);
 
-            if (advert == null)
+            if (advert is null)
                 return NotFound();
 
             _advertService.ViewsIncrementation(advert);
