@@ -9,18 +9,10 @@ namespace PortalOgloszeniowy.Services
         {
             _db = db;
         }
-        public List<Advert> GetAdverts()
-        {
-            var adverts = _db.Adverts.ToList();
-
-            return adverts;
-        }
 
         public List<Advert> GetUsersAdverts(ApplicationUser user)
         {
-            var adverts = _db.Adverts.Where(a => a.User.Id == user.Id).ToList();
-
-            return adverts;
+            return _db.Adverts.Where(a => a.User.Id == user.Id).ToList();
         }
 
         public IQueryable<Advert> GetAdvertsByCategory(int CategoryId)
@@ -35,9 +27,7 @@ namespace PortalOgloszeniowy.Services
 
         public Advert? GetAdvertUrl(string slug)
         {
-            var advert = _db.Adverts.Where(a => a.slug == slug).FirstOrDefault();
-
-            return advert;
+            return _db.Adverts.Where(a => a.slug == slug).FirstOrDefault();
         }
 
         public void ViewsIncrementation(Advert advert)

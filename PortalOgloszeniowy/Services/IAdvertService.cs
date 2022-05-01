@@ -4,7 +4,6 @@ namespace PortalOgloszeniowy.Services
 {
     public interface IAdvertService
     {
-        public List<Advert> GetAdverts();
 
         public List<Advert> GetUsersAdverts(ApplicationUser user);
 
