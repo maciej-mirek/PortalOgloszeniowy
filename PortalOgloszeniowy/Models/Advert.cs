@@ -11,18 +11,19 @@ namespace PortalOgloszeniowy.Models
         
         public int Id { get; set; }
 
+        [Display(Name = "Tytuł")]
         [Required(ErrorMessage = "Tytuł jest wymagany.")]
         public string Title { get; set; }
 
+        [Display(Name = "Opis")]
         [Required(ErrorMessage = "Opis jest wymagany.")]
         public string Description { get; set; }
 
+        [Display(Name = "Lokalizacja")]
         [Required(ErrorMessage = "Lokalizacja jest wymagana.")]
         public string Location { get; set; }
 
-        //[RegularExpression(@"^[1-9]\d{0,7}(?:\,\d{1,4})?$",ErrorMessage ="Wprowadz cene w formacie: 12,34")]
-        // [ValidateNever]
-        //[DataType(DataType.Currency,ErrorMessage ="test")]
+        [Display(Name = "Cena / koszt")]
         public decimal Price { get; set; }
 
         public string? slug { get; set; }

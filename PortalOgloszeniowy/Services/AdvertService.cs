@@ -25,10 +25,13 @@ namespace PortalOgloszeniowy.Services
 
         public IQueryable<Advert> GetAdvertsByCategory(int CategoryId)
         {
-            var adverts = _db.Adverts.Where(a => a.CategoryId == CategoryId);
-
+            var adverts = _db.Adverts.Where(a => a.CategoryId == CategoryId)
+                .OrderBy(a => a.Created_at)
+                .OrderByDescending(a => a.isPremium);
+            
+            
             return adverts;
-        }
+        } 
 
         public Advert? GetAdvertUrl(string slug)
         {
@@ -46,14 +49,19 @@ namespace PortalOgloszeniowy.Services
 
         public List<Advert> SearchAdvertsByPhrase(string value)
         {
-            var adverts = _db.Adverts.Where(a => a.Title.Contains(value)).ToList();
+            var adverts = _db.Adverts.Where(a => a.Title.Contains(value))
+                .OrderByDescending(a => a.isPremium)
+                .ToList();
 
             return adverts;
         }
 
         public List<Advert> GetPremiumAdverts()
         {
-            var adverts = _db.Adverts.Where(a => a.isPremium == true).ToList();
+            var adverts = _db.Adverts.Where(a => a.isPremium == true)
+                .OrderBy(x => Guid.NewGuid())
+                .Take(4)
+                .ToList();
 
             return adverts;
         }
