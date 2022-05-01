@@ -29,3 +29,21 @@ a{
 a:hover{
     color:black;
 }
+.category {
+    box-sizing: border-box;
+    padding:25px;
+}
+.category:hover {
+        transition-duration: .7s;
+        background-color: #9da7a8;
+        border-radius: 10px;
+        color: white;
+    }
+.category:hover i {
+        transition-duration: .7s;
+        color: white;
+    }
+.card:hover {
+    border: 1px solid black;
+    transition-duration: .7s;
+}

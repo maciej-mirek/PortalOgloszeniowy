@@ -19,17 +19,17 @@
 
 <div class="container mt-5 text-center">
     <div class="row">
-        <div class="col">
-            <a href="/motoryzacja"><i  style="display:block" class="fa-solid fa-car fa-8x"></i>Motoryzacja</a>
+        <div class="col category">
+            <a href="/motoryzacja"><i  style="display:block" class="fa-solid fa-car fa-8x"></i><p class="mt-3 h4">Motoryzacja</p></a>
         </div>
-        <div class="col">
-            <a href="/nieruchomości"><i style="display:block" class="fa-solid fa-house-chimney fa-8x"></i>Nieruchomości</a>
+        <div class="col category">
+            <a href="/nieruchomości"><i style="display:block" class="fa-solid fa-house-chimney fa-8x"></i><p class="mt-3 h4">Nieruchomości</p></a>
         </div>
-        <div class="col">
-           <a href="/elektronika">  <i style="display:block" class="fa-solid fa-laptop fa-8x"></i>Elektronika</a>
+        <div class="col category">
+           <a href="/elektronika">  <i style="display:block" class="fa-solid fa-laptop fa-8x"></i><p class="mt-3 h4">Elektronika</p></a>
         </div>
-        <div class="col">
-           <a href="/moda" > <i style="display:block" class="fa-solid fa-shirt fa-8x"></i>Moda</a>
+        <div class="col category">
+           <a href="/moda" > <i style="display:block" class="fa-solid fa-shirt fa-8x"></i><p class="mt-3 h4">Moda</p></a>
         </div>
     </div>
 </div>
@@ -39,13 +39,20 @@
 
 <div class="container mt-5 text-center">
 
-        <div class="card-group">
+        <div class="card-group row">
 @foreach(var adv in ViewBag.PremiumAdverts)
 {
   
-    <div class="card">
-    <img href="advert/@adv.slug" class="card-img-top" width="351" height="160" src="@adv.ImageUrl" alt="Card image cap">
-      <a style="text-decoration:none; color:black;" target="_blank" href="advert/@adv.slug">
+    <div class="card m-3">
+    <a style="text-decoration:none; color:black;" target="_blank" href="advert/@adv.slug">
+    @if(adv.ImageUrl is null)
+    {
+           <img href="advert/@adv.slug" class="card-img-top" width="351" height="160" src="images/default-img.png" alt="">              
+    }
+    else
+    {
+        <img href="advert/@adv.slug" class="card-img-top" width="351" height="160" src="@adv.ImageUrl" alt="Card image cap">
+    }
     <div class="card-body">
       <h5 class="card-title">@adv.Title</h5>
         <p class="card-text">@adv.Location</p>

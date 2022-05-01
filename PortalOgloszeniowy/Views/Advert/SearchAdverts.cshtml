@@ -1,4 +1,10 @@
 ﻿
+
+@if(ViewBag.Adverts.Count == 0)
+{
+    <h2 class="text-center mt-5">Brak ogłoszeń spełniających kryteria.</h2>
+}
+
 @foreach(var adv in ViewBag.Adverts)
 {
   <a style="text-decoration:none; color:black" href="~/advert/@adv.slug">
@@ -7,10 +13,18 @@
 
 
     <div class="card-body row">
-
-         <div class="image-file col" style="">
+  @if(adv.ImageUrl is null)
+    {
+           <div class="image-file col" style="">
+            <img src="/images/default-img.png" width="250" height="150" class="rounded float-left" alt="Missing File">
+        </div>              
+    }
+    else
+    {
+        <div class="image-file col" style="">
             <img src="@adv.ImageUrl" width="250" height="150" class="rounded float-left" alt="Missing File">
         </div>
+    }
 
         <div class="h5 card-title col">@adv.Title
           <small class="text-muted mt-5"><br/>
