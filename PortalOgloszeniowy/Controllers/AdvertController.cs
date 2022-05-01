@@ -105,6 +105,9 @@ namespace PortalOgloszeniowy.Controllers
 
         public ActionResult EditAdvert(int? id)
         {
+
+            //dodac walidacje uzytkownika :3 //
+
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -172,7 +175,6 @@ namespace PortalOgloszeniowy.Controllers
 
 
 
-        [HttpGet]
         [Route("Account/Advert/Premium/{id}")]
         public ActionResult PremiumAdvertModal(int id)
         {
@@ -220,8 +222,7 @@ namespace PortalOgloszeniowy.Controllers
                 return NotFound();
 
             var adv = _advertService.GetAdvertsByCategory(cat.Id);
-
-           
+            var test = adv.ToList();
 
            pageNumber = pageNumber == 0 ? 1 : pageNumber;
            var pagination = await PaginationList<Advert>.CreateAsync(adv, pageNumber, 5);
@@ -249,8 +250,6 @@ namespace PortalOgloszeniowy.Controllers
 
             return View(advert);
         }
-
-
 
 
         [Route("adverts/{slug}")]
