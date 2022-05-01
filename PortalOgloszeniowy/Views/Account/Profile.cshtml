@@ -43,7 +43,7 @@
            <a type="submit" class="btn btn-info" asp-route-Id="@adv.Id" asp-controller="Advert" asp-action="EditAdvert">Edytuj</a>
 
         <button type="button" class="btn-danger btn" data-toggle="ajax-modal" data-target="#addEmployee"
-            data-url="@Url.Action($"Advert/ModalAdvert/{@adv.Id}")">Usuń</button>
+            data-url="@Url.Action($"Advert/ModalDeleteAdvert/{@adv.Id}")">Usuń</button>
                 
         <div id="PlaceHolderHere"> </div>
          
