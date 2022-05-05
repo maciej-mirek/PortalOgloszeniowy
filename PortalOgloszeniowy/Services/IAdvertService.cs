@@ -5,9 +5,10 @@ namespace PortalOgloszeniowy.Services
     public interface IAdvertService
     {
 
+
         public List<Advert> GetUsersAdverts(ApplicationUser user);
 
-        public IQueryable<Advert> GetAdvertsByCategory(int CategoryId);
+        public List<Advert> GetAdvertsByCategory(int CategoryId);
 
         public Advert? GetAdvertUrl(string slug);
 

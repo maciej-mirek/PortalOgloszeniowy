@@ -32,10 +32,12 @@
                 <input asp-for="Advert.Location" class="form-control" />
                 <span asp-validation-for="Advert.Location" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group price">
                 <label asp-for="Advert.Price" class="control-label"></label>
-                <input asp-for="Advert.Price" class="form-control" />
-                <span asp-validation-for="Advert.Price" class="text-danger"></span>
+                <input name="price" class="form-control" />
+                <input asp-for="Advert.Price" hidden class="form-control" />
+                <span asp-validation-for="Advert.Price" class="text-danger "></span>
+                
             </div>
             <div class="form-group text-center mt-3">
                 <input type="submit" value="Zapisz" class="btn btn-primary m-2" />

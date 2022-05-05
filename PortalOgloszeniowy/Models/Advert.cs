@@ -9,6 +9,7 @@ namespace PortalOgloszeniowy.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Tytuł")]
@@ -26,9 +27,10 @@ namespace PortalOgloszeniowy.Models
         [Display(Name = "Cena / koszt")]
         public decimal Price { get; set; }
 
-        public string? slug { get; set; }
+        [ValidateNever]
+        public string slug { get; set; }
 
-        public DateTime Created_at { get; set; }
+        public DateTime Created_at { get; set; } = DateTime.Now;
         
         [ValidateNever]
         public string UserId { get; set; }

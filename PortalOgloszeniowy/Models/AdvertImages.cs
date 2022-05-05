@@ -11,7 +11,8 @@ namespace PortalOgloszeniowy.Models
 
         public int Id { get; set; }
 
-        public string? ImageUrl { get; set; }
+        [ValidateNever]
+        public string ImageUrl { get; set; }
 
         [ValidateNever]
         public Advert Advert { get; set; }

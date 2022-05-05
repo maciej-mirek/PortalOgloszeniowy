@@ -34,7 +34,6 @@ namespace PortalOgloszeniowy.Services
 
         public void AdvertImages(IFormFileCollection files,Advert advert)
         {
-            List<AdvertImages> images = new List<AdvertImages>();   
 
             foreach (var f in files)
             {

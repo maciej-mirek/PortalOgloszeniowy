@@ -44,6 +44,7 @@ a:hover{
         color: white;
     }
 .card:hover {
-    border: 1px solid black;
+    border: 3px dotted black;
     transition-duration: .7s;
 }
+

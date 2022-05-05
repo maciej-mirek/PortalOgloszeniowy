@@ -27,7 +27,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<IAdvertService,AdvertService>();
 builder.Services.AddScoped<IUploadImageService,UploadImageService>();
-builder.Services.AddScoped<SlugHelper>();
+builder.Services.AddScoped<ISlugHelper,SlugHelper>();
 
 
 CultureInfo culture = new CultureInfo("pl-PL");

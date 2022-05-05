@@ -23,6 +23,8 @@ namespace PortalOgloszeniowy.Controllers
 
         public IActionResult Index()
         {
+
+            // Wyrzucic do do AdvertService
             SearchViewModel model = new SearchViewModel()
             {
                 CategoryDropDown = _db.Categories.Select(c => new SelectListItem

@@ -17,11 +17,11 @@ namespace PortalOgloszeniowy.Controllers
         ApplicationDbContext _db;
         IFlashMessage _flashMessage;
         IAdvertService _advertService;
-        SlugHelper _slugger;
+        ISlugHelper _slugger;
         IUploadImageService _uploadImageService;
         const int AdvertsOnPage = 5;
         public AdvertController(ApplicationDbContext db, UserManager<ApplicationUser> userManager,
-            IFlashMessage flashMessage, IAdvertService advertService, SlugHelper slugHelper, 
+            IFlashMessage flashMessage, IAdvertService advertService, ISlugHelper slugHelper, 
             IUploadImageService uploadImageService)
         {
             _db = db;
@@ -37,7 +37,7 @@ namespace PortalOgloszeniowy.Controllers
         [Route("/create")]
         public ActionResult Create()
         {
-
+            // Wyrzucic to ?????????
             AdvertViewModel model = new AdvertViewModel()
             {
                 Advert = new Advert(),
@@ -53,7 +53,8 @@ namespace PortalOgloszeniowy.Controllers
         [Authorize]
         [HttpPost]
         [Route("/create")]
-        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file, IFormFileCollection? files, decimal price)
+        public async Task<ActionResult> Create(AdvertViewModel model, IFormFile? file,
+            IFormFileCollection? files, decimal price)
         {
 
             if (ModelState.IsValid)
@@ -68,7 +69,6 @@ namespace PortalOgloszeniowy.Controllers
 
 
                 model.Advert.slug=_slugger.GenerateSlug(model.Advert.Title);
-                model.Advert.Created_at = DateTime.Now;
                 model.Advert.User = await _userManager.GetUserAsync(User);
                 model.Advert.Price = price;
 
@@ -82,7 +82,6 @@ namespace PortalOgloszeniowy.Controllers
             {
                 ModelState["Advert.CategoryId"]?.Errors.Clear();
                 ModelState["Advert.CategoryId"]?.Errors.Add("Musisz wybrać kategorie dla ogłoszenia.");
-                ModelState["Advert.Price"]?.Errors.Add("Wprowadz cene w formacie: 12,34");
 
 
             }
@@ -103,7 +102,7 @@ namespace PortalOgloszeniowy.Controllers
 
         }
 
-
+        [Authorize]
         public ActionResult EditAdvert(int? id)
         {
 
@@ -129,21 +128,31 @@ namespace PortalOgloszeniowy.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditAdvert(AdvertViewModel model)
+        [Authorize]
+        public ActionResult EditAdvert(AdvertViewModel model, decimal price)
         {
 
             if (ModelState.IsValid)
             {
+                model.Advert.Price = price;
                 _advertService.EditAdvert(model.Advert);
                 _flashMessage.Confirmation("Edytowano ogłoszenie.");
                 return RedirectToAction("Profile", "Account");
 
             }
+
+            if (ModelState["price"]?.Errors.Count > 0)
+            {
+                ModelState["Advert.Price"]?.Errors.Clear();
+                ModelState["Advert.Price"]?.Errors.Add("Wprowadz cene w formacie: 12,34");
+
+            }
+
             return View(model);
         }
 
 
-
+        [Authorize]
         [Route("Account/Advert/ModalDeleteAdvert/{id}")]
         public ActionResult ModalDeleteAdvert(int id)
         {
@@ -160,7 +169,7 @@ namespace PortalOgloszeniowy.Controllers
             var user = await _userManager.GetUserAsync(User);
             
             var advert = _db.Adverts.Find(advertId);
-            if(advert.User != user)
+            if(advert?.User != user)
             {
                 return NotFound();
             }
@@ -175,7 +184,7 @@ namespace PortalOgloszeniowy.Controllers
         }
 
 
-
+        [Authorize]
         [Route("Account/Advert/Premium/{id}")]
         public ActionResult PremiumAdvertModal(int id)
         {
@@ -225,7 +234,7 @@ namespace PortalOgloszeniowy.Controllers
             var adv = _advertService.GetAdvertsByCategory(cat.Id);
 
            pageNumber = pageNumber == 0 ? 1 : pageNumber;
-           var pagination = await PaginationList<Advert>.CreateAsync(adv, pageNumber, AdvertsOnPage);
+           var pagination = PaginationService<Advert>.CreateAsync(adv, pageNumber, AdvertsOnPage);
            int pageCount = adv.Count() / AdvertsOnPage;
            pageCount = adv.Count() % AdvertsOnPage != 0 ? pageCount + 1 : pageCount;
 

@@ -15,14 +15,14 @@ namespace PortalOgloszeniowy.Services
             return _db.Adverts.Where(a => a.User.Id == user.Id).ToList();
         }
 
-        public IQueryable<Advert> GetAdvertsByCategory(int CategoryId)
+        public List<Advert> GetAdvertsByCategory(int CategoryId)
         {
             var adverts = _db.Adverts.Where(a => a.CategoryId == CategoryId)
                 .OrderBy(a => a.Created_at)
                 .OrderByDescending(a => a.isPremium);
             
             
-            return adverts;
+            return adverts.ToList();
         } 
 
         public Advert? GetAdvertUrl(string slug)
