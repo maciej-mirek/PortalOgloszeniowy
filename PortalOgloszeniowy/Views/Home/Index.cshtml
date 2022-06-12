@@ -37,7 +37,7 @@
 <h1 class="display-4 text-center" style="margin-top:15%">Ogłoszenia sponsorowane</h1>
 
 
-<div class="container mt-5 text-center">
+<div class="container mt-3 text-center">
 
         <div class="card-group row">
 @foreach(var adv in ViewBag.PremiumAdverts)
@@ -55,7 +55,10 @@
     }
     <div class="card-body">
       <h5 class="card-title">@adv.Title</h5>
-        <p class="card-text">@adv.Location</p>
+        <p class="card-text">
+            @adv.Price zł <br/>
+            @adv.Location 
+        </p>
     </div>
     <div class="card-footer">
       <small class="text-muted">@adv.Created_at</small>

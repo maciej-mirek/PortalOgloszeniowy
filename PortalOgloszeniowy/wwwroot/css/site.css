@@ -43,8 +43,7 @@ a:hover{
         transition-duration: .7s;
         color: white;
     }
-.card:hover {
-    border: 3px dotted black;
-    transition-duration: .7s;
+.card:hover ~ .card_title {
+    border: 3px solid black;
 }
 

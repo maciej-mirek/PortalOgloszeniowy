@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalOgloszeniowy", "PortalOgloszeniowy\PortalOgloszeniowy.csproj", "{BCB8F04A-84B8-4446-AA36-8DAFDDB532BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalOgloszeniowy", "PortalOgloszeniowy\PortalOgloszeniowy.csproj", "{BCB8F04A-84B8-4446-AA36-8DAFDDB532BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalOgloszeniowy.Tests", "PortalOgloszeniowy.Tests\PortalOgloszeniowy.Tests.csproj", "{D9A5FF1F-2406-469A-ADDE-E7C56DBAEC85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BCB8F04A-84B8-4446-AA36-8DAFDDB532BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB8F04A-84B8-4446-AA36-8DAFDDB532BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB8F04A-84B8-4446-AA36-8DAFDDB532BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A5FF1F-2406-469A-ADDE-E7C56DBAEC85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A5FF1F-2406-469A-ADDE-E7C56DBAEC85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A5FF1F-2406-469A-ADDE-E7C56DBAEC85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A5FF1F-2406-469A-ADDE-E7C56DBAEC85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

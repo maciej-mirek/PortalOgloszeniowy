@@ -49,7 +49,7 @@ namespace PortalOgloszeniowy.Services
                     ImageUrl = @"\images\" + fileName + extension,
                     Advert = advert,
                 };
-                _db.AdvertImages.AddAsync(advertImage);
+                _db.AdvertImages.Add(advertImage);
             }
 
         }

@@ -8,16 +8,19 @@
       </div>
       <div class="modal-body">
         <label>Podaj numer karty kredytowej.</label>
-        <input type="text"/>
-      </div>
-      <div class="modal-footer">
          <form method="post" asp-antiforgery="false" asp-action="PremiumAdvert" asp-controller="Advert"> 
+
+        <input name="cardNumber"  size="30"type="text"/> <br />
+        <label>Podaj numer CVV.</label> <br />
+        <input name="cvv" size="5" type="text"/> <br/>
+        <div class="text-right">Kwota: 10,00 zł</div>
+      <div class="modal-footer">
              <input type="hidden" asp-for="@Model.Id" id="advertId" name="advertId" />
             <button type="button" class="btn btn-info" data-save="modal">Zamknij</button>
              <input type="submit" class="btn btn-success" asp-route-Id="@Model.Id" asp-controller="Advert" asp-action="PremiumAdvert" value="Ulepsz"/>
+         </div>
          </form>
-
+          </div>
       </div>
     </div>
   </div>
-</div>

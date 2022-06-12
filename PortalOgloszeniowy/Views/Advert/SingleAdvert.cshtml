@@ -16,13 +16,13 @@
   <div class="carousel-inner">
 
 
-     <img class="rounded carousel-item active" width="800" height="450"  src="@ViewBag.Advert.ImageUrl" />
+     <img class="rounded carousel-item active"  height="450"  src="@ViewBag.Advert.ImageUrl" />
 
 
         @foreach(var img in ViewBag.Gallery)
       {
              <div class="rounded carousel-item ">
-                <img src="@img.ImageUrl"width="800" height="450"     class="d-block w-100" alt="">
+                <img src="@img.ImageUrl" height="450"     class="d-block w-100" alt="">
              </div>    
       }
 
@@ -40,12 +40,13 @@
   }
 
 </div>
-
-            <p class="mt-5">
+ <hr />
+            <h4>Opis ogłoszenia:</h4>
+            <p class="mt-4">
                 @ViewBag.Advert.Description
             </p>
     
-
+ <hr />
 
 
 
@@ -66,8 +67,10 @@
         <div class="col-4 border">
             <img class="rounded p-2 mx-auto d-block" width="40%" src="/images/avatar.png"/>
             <p class="text-center"> Autor Ogłoszenia: @ViewBag.AdvertOwner.FirstName </p>
+            <hr />
              <p class="number-info text-center">Zobacz numer telefonu</p> <p class="d-none text-center number"> @ViewBag.AdvertOwner.PhoneNumber </p>
-                        <h3 class="text-center mt-4">@ViewBag.Advert.Price zł</h3>
+             <hr />          
+             <h3 class="text-center mt-4">@ViewBag.Advert.Price zł</h3>
             <div class="mt-5">Lokalizacja: @ViewBag.Advert.Location</div>
             <div class="mt-2">Dodano @ViewBag.Advert.Created_at</div>
          </div>

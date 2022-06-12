@@ -1,40 +1,113 @@
-﻿
+﻿@model PortalOgloszeniowy.Models.PaginationService<Advert>
 
-@if(ViewBag.Adverts.Count == 0)
-{
-    <h2 class="text-center mt-5">Brak ogłoszeń spełniających kryteria.</h2>
+@{
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
 }
 
-@foreach(var adv in ViewBag.Adverts)
+@if(@Model.Count == 0)
+{
+      <h1>Nie znaleziono ogłoszeń.</h1>
+}
+
+@foreach(var adv in @Model)
 {
   <a style="text-decoration:none; color:black" href="~/advert/@adv.slug">
-    <div class="card w-75">
+   
+      @if(adv.isPremium)
+        {
+          <div class="card w-75 bg-warning">
 
+            <div class="card-body row">
 
-
-    <div class="card-body row">
   @if(adv.ImageUrl is null)
     {
            <div class="image-file col" style="">
-            <img src="/images/default-img.png" width="250" height="150" class="rounded float-left" alt="Missing File">
+            <img src="/images/default-img.png" width="200" height="150" class="rounded float-left" alt="Missing File">
         </div>              
     }
     else
     {
         <div class="image-file col" style="">
-            <img src="@adv.ImageUrl" width="250" height="150" class="rounded float-left" alt="Missing File">
+            <img src="@adv.ImageUrl" width="200" height="150" class="rounded float-left" alt="Missing File">
         </div>
     }
 
         <div class="h5 card-title col">@adv.Title
-          <small class="text-muted mt-5"><br/>
+          <small class="text-muted mt-5"> <br/>
+          <cite title="Source Title">@adv.Location</cite> <br/><br/>
+          <cite title="Source Title">@adv.Created_at</cite>
+        </small>
+        </div>
+        <div class="col"><p class="text-end"  ><i class="bi bi-stopwatch fa-lg"></i> @adv.Price zł</p> </div>
+
+    </div>
+            </div>
+        }
+        else
+        {
+           <div class="card w-75">
+
+            <div class="card-body row">
+  @if(adv.ImageUrl is null)
+    {
+           <div class="image-file col" style="">
+            <img src="/images/default-img.png" width="200" height="150" class="rounded float-left" alt="Missing File">
+        </div>              
+    }
+    else
+    {
+        <div class="image-file col" style="">
+            <img src="@adv.ImageUrl" width="200" height="150" class="rounded float-left" alt="">
+        </div>
+    }
+
+        <div class="h5 card-title col">@adv.Title
+          <small class="text-muted mt-5">
           <cite title="Source Title">@adv.Location</cite>
           <cite title="Source Title">@adv.Created_at</cite>
         </small>
         </div>
-        <div class="col"><p class="text-end"><i class="bi bi-stopwatch fa-lg"></i> @adv.Price zł</p> </div>
+        <div class="col"><p class="text-end"  ><i class="bi bi-stopwatch fa-lg"></i> @adv.Price zł</p> </div>
 
     </div>
-   </div>
+            </div>
+        }
+
+   
    </a>
 }
+<nav>
+
+<ul class="pagination">
+    <a  asp-route-pageNumber="@(@Model.PageIndex - 1)" class="btn btn-default @prevDisabled ">
+    Wstecz 
+</a>
+@for (int i = 1; i <= @ViewBag.pageCount;i++)
+{
+    @if (@Model.PageIndex == i)
+            {
+               <li class="page-item active"> 
+                    <a class="page-link">
+                        @i 
+                    </a>
+                </li>
+                
+            }
+            else
+            {
+                <li class="page-item"> 
+         <a  asp-route-pageNumber="@i" class="page-link btn btn-default">
+             @i
+        </a>
+    </li>
+            }
+
+            
+}
+<a asp-route-pageNumber="@(@Model.PageIndex + 1)" class="btn btn-default @nextDisabled ">
+    Następna 
+</a>
+</ul>
+
+</nav>

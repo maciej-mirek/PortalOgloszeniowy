@@ -10,7 +10,7 @@ namespace PortalOgloszeniowy.Models.ViewModels
         [Required(ErrorMessage = "Nazwisko jest wymagane.")]
         [Display(Name = "Nazwisko")]
         public string LastName { get; set; }
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="Email nie jest poprawny.")]
         [Required(ErrorMessage = "Adres e-mail jest wymagany.")]
         public string Email { get; set; }
 

@@ -106,8 +106,9 @@ namespace PortalOgloszeniowy.Controllers
         [Route("/profile")]
         public async Task<IActionResult> Profile()
         {
-            ViewBag.Adverts = _advertService.GetUsersAdverts(await _userManager.GetUserAsync(User));
-            ViewBag.User = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User);
+            ViewBag.Adverts = _advertService.GetUsersAdverts(user);
+            ViewBag.User = user;
             return View();
         }
     }

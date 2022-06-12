@@ -198,6 +198,7 @@ namespace PortalOgloszeniowy.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("slug")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -206,7 +207,7 @@ namespace PortalOgloszeniowy.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Adverts", (string)null);
+                    b.ToTable("Adverts");
                 });
 
             modelBuilder.Entity("PortalOgloszeniowy.Models.AdvertImages", b =>
@@ -221,13 +222,14 @@ namespace PortalOgloszeniowy.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AdvertId");
 
-                    b.ToTable("AdvertImages", (string)null);
+                    b.ToTable("AdvertImages");
                 });
 
             modelBuilder.Entity("PortalOgloszeniowy.Models.ApplicationUser", b =>
@@ -317,7 +319,7 @@ namespace PortalOgloszeniowy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

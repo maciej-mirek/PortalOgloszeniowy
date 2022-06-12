@@ -37,7 +37,6 @@ namespace PortalOgloszeniowy.Controllers
         [Route("/create")]
         public ActionResult Create()
         {
-            // Wyrzucic to ?????????
             AdvertViewModel model = new AdvertViewModel()
             {
                 Advert = new Advert(),
@@ -103,12 +102,13 @@ namespace PortalOgloszeniowy.Controllers
         }
 
         [Authorize]
-        public ActionResult EditAdvert(int? id)
+        public async Task<ActionResult> EditAdvert(int id)
         {
 
-            //dodac walidacje uzytkownika :3 //
+            var user = await _userManager.GetUserAsync(User);
 
-            if (id is null || id == 0)
+            var advert = _db.Adverts.Find(id);
+            if (advert?.User != user || id == 0)
             {
                 return NotFound();
             }
@@ -194,13 +194,13 @@ namespace PortalOgloszeniowy.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> PremiumAdvert(int? advertId)
+        public async Task<ActionResult> PremiumAdvert(int? advertId, string cardNumber, string cvv)
         {
 
             var user = await _userManager.GetUserAsync(User);
 
             var advert = _db.Adverts.Find(advertId);
-            if (advert.User != user)
+            if (advert?.User != user)
             {
                 return NotFound();
             }
@@ -240,7 +240,7 @@ namespace PortalOgloszeniowy.Controllers
 
            ViewBag.pageCount = pageCount;
 
-            return View(pagination);
+            return View("SearchAdverts",pagination);
         }
 
         [Route("/advert/{slug}")]
@@ -262,13 +262,18 @@ namespace PortalOgloszeniowy.Controllers
 
 
         [Route("adverts/{slug}")]
-        public ActionResult SearchAdverts(string slug)
+        public ActionResult SearchAdverts(string slug, int pageNumber)
         {
-            var adverts = _advertService.SearchAdvertsByPhrase(slug);
+            var adv = _advertService.SearchAdvertsByPhrase(slug);
 
-            ViewBag.Adverts = adverts;
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
+            var pagination = PaginationService<Advert>.CreateAsync(adv, pageNumber, AdvertsOnPage);
+            int pageCount = adv.Count() / AdvertsOnPage;
+            pageCount = adv.Count() % AdvertsOnPage != 0 ? pageCount + 1 : pageCount;
 
-            return View(adverts);
+            ViewBag.pageCount = pageCount;
+
+            return View(pagination);
         }
 
     }

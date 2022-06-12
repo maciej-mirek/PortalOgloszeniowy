@@ -18,11 +18,12 @@ namespace PortalOgloszeniowy.Services
         public List<Advert> GetAdvertsByCategory(int CategoryId)
         {
             var adverts = _db.Adverts.Where(a => a.CategoryId == CategoryId)
-                .OrderBy(a => a.Created_at)
-                .OrderByDescending(a => a.isPremium);
+                .OrderByDescending(a => a.isPremium)
+                .ThenByDescending(a=> a.Created_at)
+                .ToList();
             
             
-            return adverts.ToList();
+            return adverts;
         } 
 
         public Advert? GetAdvertUrl(string slug)
@@ -41,6 +42,7 @@ namespace PortalOgloszeniowy.Services
         {
             var adverts = _db.Adverts.Where(a => a.Title.Contains(value))
                 .OrderByDescending(a => a.isPremium)
+                .ThenByDescending(a => a.Created_at)
                 .ToList();
 
             return adverts;
@@ -89,5 +91,6 @@ namespace PortalOgloszeniowy.Services
             }
             return false;
         }
+
     }
 }
